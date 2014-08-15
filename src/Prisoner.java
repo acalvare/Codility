@@ -16,8 +16,14 @@ public class Prisoner {
 	
 	public ArrayList<ArrayList<Integer>> getPath(int prisoner, ArrayList<Integer> exitNodes, int[] A, int[] B){
 		ArrayList<ArrayList<Integer>> exitLists = new ArrayList<ArrayList<Integer>>();
+		
+		//Gets the Paths going forward
 		ArrayList<ArrayList<Integer>> forwardExitLists = getPathOneDirection(prisoner, exitNodes, A, B);
+		
+		//Gets the paths going backward
 		ArrayList<ArrayList<Integer>> backwardExitLists = getPathOneDirection(prisoner, exitNodes, B, A);
+		
+		//Combines the forward and backward paths to get the total paths to an exit
 		for(int i = 0 ; i < forwardExitLists.size(); i++){
 			exitLists.add(forwardExitLists.get(i));
 		}
@@ -29,8 +35,6 @@ public class Prisoner {
 	
 	public ArrayList<ArrayList<Integer>> getPathOneDirection(int prisoner, ArrayList<Integer> exitNodes, int[] A, int[] B){
 		ArrayList<ArrayList<Integer>> exitLists = new ArrayList<ArrayList<Integer>>();
-		
-		//Gets the paths going forward
 		for(int i = 0 ; i < A.length ; i++){
 			if(A[i] == prisoner){
 				//System.out.println("Found: "+prisoner);
@@ -54,7 +58,6 @@ public class Prisoner {
 			}
 		}
 
-		//Gets the paths going backwards
 		return exitLists;
 	}
 	
