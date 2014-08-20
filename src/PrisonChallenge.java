@@ -7,14 +7,7 @@ public class PrisonChallenge {
 		int[] A = {0,1,2,3,3,2,6,6};
 		int[] B = {1,2,3,4,5,6,8,7};
 		int[] C = {1,6};
-		Guard g = new Guard();
-		ArrayList<Integer> guardList;
-		ArrayList<Integer> exitNodes = getExitNodes(A, B);
-		ArrayList<Prisoner> prisoners = setUpPrisoners(C, exitNodes, A, B);
-		ArrayList<ArrayList<Integer>> totalExitPaths = combinePrisonerExitLists(prisoners);
-		guardList = g.getMinimumNumberOfGuards(totalExitPaths, C, A);
-		System.out.println("GuardList: ");
-		printList(guardList);
+		System.out.println(solution(A, B, C));
 
 //		for(Prisoner p : prisoners){
 //			System.out.println("Path for: "+p.getStartingPosition());
@@ -28,10 +21,21 @@ public class PrisonChallenge {
 	public static int solution(int[] A, int[] B, int[] C) {
 		// printList(getExitNodes(A,B));
 		//Checks to see if it is possible to catch all prisoners
-		if(anyPrisonersOnExitNodes(getExitNodes(A, B), C))
+		if(anyPrisonersOnExitNodes(getExitNodes(A, B), C)){
 			return -1;
-		else
-			return 0;
+		}
+		else{
+			Guard g = new Guard();
+			ArrayList<Integer> guardList;
+			ArrayList<Integer> exitNodes = getExitNodes(A, B);
+			ArrayList<Prisoner> prisoners = setUpPrisoners(C, exitNodes, A, B);
+			ArrayList<ArrayList<Integer>> totalExitPaths = combinePrisonerExitLists(prisoners);
+			guardList = g.getMinimumNumberOfGuards(totalExitPaths, C, A);
+			System.out.println("GuardList: ");
+			printList(guardList);
+			return guardList.size();
+		}
+	
 	}
 
 	/**
@@ -44,7 +48,7 @@ public class PrisonChallenge {
 		ArrayList<Prisoner> prisoners = new ArrayList<Prisoner>();
 		for(int i = 0; i<C.length ; i++){
 			Prisoner prisoner = new Prisoner();
-			prisoner.setExitList(prisoner.getPath(C[i], exitNodes, A, B));
+			prisoner.setExitList(prisoner.getPath(C[i], exitNodes, A, B, -1));
 			prisoner.setStartingPosition(C[i]);
 			prisoners.add(prisoner);
 		}

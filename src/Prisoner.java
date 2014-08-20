@@ -12,29 +12,27 @@ public class Prisoner {
 	}
 	public Prisoner(){
 	}
-	
-	
-	public ArrayList<ArrayList<Integer>> getPath(int prisoner, ArrayList<Integer> exitNodes, int[] A, int[] B){
+
+
+	public ArrayList<ArrayList<Integer>> combineArrayLists(ArrayList<ArrayList<Integer>> forwardPath, ArrayList<ArrayList<Integer>> backwardPath){
 		ArrayList<ArrayList<Integer>> exitLists = new ArrayList<ArrayList<Integer>>();
-		
-		//Gets the Paths going forward
-		ArrayList<ArrayList<Integer>> forwardExitLists = getPathOneDirection(prisoner, exitNodes, A, B);
-		
-		//Gets the paths going backward
-		ArrayList<ArrayList<Integer>> backwardExitLists = getPathOneDirection(prisoner, exitNodes, B, A);
-		
 		//Combines the forward and backward paths to get the total paths to an exit
-		for(int i = 0 ; i < forwardExitLists.size(); i++){
-			exitLists.add(forwardExitLists.get(i));
+		if(forwardPath != null){
+			for(int i = 0 ; i < forwardPath.size(); i++){
+				exitLists.add(forwardPath.get(i));
+			}
 		}
-		for(int i = 0 ; i < backwardExitLists.size(); i++){
-			exitLists.add(backwardExitLists.get(i));
+		if(backwardPath != null){
+			for(int i = 0 ; i < backwardPath.size(); i++){
+				exitLists.add(backwardPath.get(i));
+			}
 		}
 		return exitLists;
 	}
-	
-	public ArrayList<ArrayList<Integer>> getPathOneDirection(int prisoner, ArrayList<Integer> exitNodes, int[] A, int[] B){
-		ArrayList<ArrayList<Integer>> exitLists = new ArrayList<ArrayList<Integer>>();
+	public ArrayList<ArrayList<Integer>> getPath(int prisoner, ArrayList<Integer> exitNodes, int[] A, int[] B, int alreadyVisited){
+		ArrayList<ArrayList<Integer>> exitListsForward = new ArrayList<ArrayList<Integer>>();
+		ArrayList<ArrayList<Integer>> exitListsBackward = new ArrayList<ArrayList<Integer>>();
+
 		for(int i = 0 ; i < A.length ; i++){
 			if(A[i] == prisoner){
 				//System.out.println("Found: "+prisoner);
@@ -42,25 +40,51 @@ public class Prisoner {
 				if(isExitNode(B[i], exitNodes)){
 					list.add(B[i]);
 					list.add(prisoner);
-					exitLists.add(list);
+					exitListsForward.add(list);
 					//System.out.println("Found end node with call : "+prisoner+" at : "+B[i]);
 				}
 				else{
-					//System.out.println("recursive call with : "+B[i]);
-					ArrayList<ArrayList<Integer>> recursiveList = getPathOneDirection(B[i], exitNodes, A, B);
-					//System.out.println("waiting...");
-					for(int j = 0 ; j< recursiveList.size() ; j++){
-						//System.out.println("J: "+j);
-						recursiveList.get(j).add(prisoner);
-						exitLists.add(recursiveList.get(j));	
+					if(B[i] != alreadyVisited){
+						ArrayList<ArrayList<Integer>> recursiveList = getPath(B[i], exitNodes, A, B, A[i]);
+						//System.out.println("waiting...");
+						for(int j = 0 ; j< recursiveList.size() ; j++){
+							//System.out.println("J: "+j);
+							recursiveList.get(j).add(prisoner);
+							exitListsForward.add(recursiveList.get(j));	
+						}
 					}
 				}
 			}
 		}
 
-		return exitLists;
+		for(int i = 0 ; i < B.length ; i++){
+			if(B[i] == prisoner){
+				//System.out.println("Found: "+prisoner);
+				ArrayList<Integer> list = new ArrayList<Integer>();
+				if(isExitNode(A[i], exitNodes)){
+					list.add(A[i]);
+					list.add(prisoner);
+					exitListsBackward.add(list);
+					//System.out.println("Found end node with call : "+prisoner+" at : "+B[i]);
+				}
+				else{
+
+					if(A[i] != alreadyVisited){
+						ArrayList<ArrayList<Integer>> recursiveList = getPath(A[i], exitNodes, A, B, B[i]);
+						//System.out.println("waiting...");
+						for(int j = 0 ; j< recursiveList.size() ; j++){
+							//System.out.println("J: "+j);
+							recursiveList.get(j).add(prisoner);
+							exitListsBackward.add(recursiveList.get(j));	
+						}
+					}
+				}
+			}
+		}
+
+		return combineArrayLists(exitListsForward, exitListsBackward);
 	}
-	
+
 	public boolean isExitNode(int value, ArrayList<Integer> exitNodes){
 		for(int i = 0 ; i < exitNodes.size() ; i++){
 			if(exitNodes.get(i) == value){
@@ -81,7 +105,7 @@ public class Prisoner {
 	public void setStartingPosition(int startingPosition) {
 		this.startingPosition = startingPosition;
 	}
-	
-	
-	
+
+
+
 }

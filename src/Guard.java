@@ -13,7 +13,7 @@ public class Guard {
 		while(totalExitPaths.size() > 1){
 			//System.out.println("TotalExitPaths size: "+totalExitPaths.size());
 			int node = getNextRequiredGuard(totalExitPaths, prisoners, A);
-			System.out.println("Removing node : " +node);
+			//System.out.println("Removing node : " +node);
 			guards.add(node);
 			totalExitPaths = removePathContainingNode(node, totalExitPaths);
 			
