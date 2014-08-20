@@ -1,3 +1,4 @@
+package Phosphorus2014;
 import java.util.ArrayList;
 
 
@@ -10,10 +11,10 @@ public class Guard {
 	public ArrayList<Integer> getMinimumNumberOfGuards(ArrayList<ArrayList<Integer>> totalExitPaths, int[] prisoners, int[] A){
 		ArrayList<Integer> guards = new ArrayList<Integer>();
 		//System.out.println("In minnumguards");
-		while(totalExitPaths.size() > 1){
+		while(totalExitPaths.size() >= 1){
 			//System.out.println("TotalExitPaths size: "+totalExitPaths.size());
 			int node = getNextRequiredGuard(totalExitPaths, prisoners, A);
-			//System.out.println("Removing node : " +node);
+			System.out.println("Removing node : " +node);
 			guards.add(node);
 			totalExitPaths = removePathContainingNode(node, totalExitPaths);
 			

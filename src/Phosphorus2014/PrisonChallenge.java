@@ -1,3 +1,4 @@
+package Phosphorus2014;
 import java.util.ArrayList;
 
 
@@ -7,8 +8,13 @@ public class PrisonChallenge {
 		int[] A = {0,1,2,3,3,2,6,6};
 		int[] B = {1,2,3,4,5,6,8,7};
 		int[] C = {1,6};
-		System.out.println(solution(A, B, C));
-
+		
+		int[] D = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		int[] E = {0, 0, 0, 2, 4, 3, 5, 5, 7, 1};
+		int[] F = {3, 5};
+		System.out.println("Number of Guards: "+solution(A, B, C));
+		System.out.println();
+		System.out.println("Number of Guards: "+solution(D, E, F));
 //		for(Prisoner p : prisoners){
 //			System.out.println("Path for: "+p.getStartingPosition());
 //			printPaths(p.getExitList());
@@ -33,6 +39,7 @@ public class PrisonChallenge {
 			guardList = g.getMinimumNumberOfGuards(totalExitPaths, C, A);
 			System.out.println("GuardList: ");
 			printList(guardList);
+			System.out.println();
 			return guardList.size();
 		}
 	
