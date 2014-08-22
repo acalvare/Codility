@@ -15,9 +15,9 @@ public class PrisonEscape {
 		int[] F = {3, 5};
 
 		Node[] nodes = setUpNodeList(D, E, F);
-//		for(Node node : nodes){
-//			System.out.println(node);
-//		}
+		for(Node node : nodes){
+			System.out.println(node);
+		}
 		System.out.println("Guard Count: "+getGuardCount(nodes));
 		//ArrayList<Node> nodes = new ArrayList<Node>();
 		//		System.out.println("Number of Guards: "+solution(A, B, C));
