@@ -17,18 +17,19 @@ public class Solution {
 
 	public static int solution(int X, int Y, int K, int[] A, int[] B) {
 		// write your code in Java SE 8
-		CakeSlice[] slices = generateCakeSliceList(X, Y, A, B);
-		Arrays.sort(slices);
+		int[] areas = generateCakeSliceList(X, Y, A, B);
+		Arrays.sort(areas);
 		//printArray(slices);
 		if(K > 0)
-			return((int)slices[K-1].getArea());
+			return(areas[areas.length-(K)]);
 		return -1;
 	}
 
-	public static CakeSlice[] generateCakeSliceList(int X, int Y, int[] A, int[] B){
+	public static int[] generateCakeSliceList(int X, int Y, int[] A, int[] B){
 
 		//ArrayList<CakeSlice> slices = new ArrayList<CakeSlice>();
-		CakeSlice[] slices = new CakeSlice[(int)Math.pow((A.length + 1), 2)];
+		//int[] areas = new int[(int)Math.pow((A.length + 1), 2)];
+		ArrayList<Integer> areas = new ArrayList<Integer>();
 		int count = 0;
 		int[] xValues = getTotalArray(X, A);
 		int[] yValues = getTotalArray(Y, B);
@@ -36,11 +37,17 @@ public class Solution {
 			for(int j = 1 ; j < yValues.length ; j++){
 				CakeSlice slice = new CakeSlice(xValues[i],yValues[j],xValues[i-1],yValues[j-1]);
 				slice.computeArea();
-				slices[count] = (slice);
+				//areas[count] = slice.getArea();
+				areas.add(slice.getArea());
 				count++;
 			}
 		}
-		return slices;
+		
+		int[] areaArray = new int[areas.size()];
+		for(int i = 0 ; i < areas.size() ; i++){
+			areaArray[i] = areas.get(i);
+		}
+		return areaArray;
 
 
 	}

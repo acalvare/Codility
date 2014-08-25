@@ -2,7 +2,7 @@ package Silicium2014;
 
 public class CakeSlice implements Comparable<CakeSlice> {
 	
-	private long area; //area must be a long since the range for X and Y is 2-400Million, which could overflow an int if area is calculated
+	private int area; //area must be a long since the range for X and Y is 2-400Million, which could overflow an int if area is calculated
 	private int x;
 	private int y;
 	private int previousX;
@@ -22,12 +22,12 @@ public class CakeSlice implements Comparable<CakeSlice> {
 	}
 
 
-	public long getArea() {
+	public int getArea() {
 		return area;
 	}
 
 	public void computeArea() {
-		this.area = ((long)this.x - (long)this.previousX) * ((long) this.y - (long) this.previousY);
+		this.area = (this.x - this.previousX) * (this.y - this.previousY);
 	}
 
 	public int getX() {
